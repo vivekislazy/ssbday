@@ -97,6 +97,9 @@
   <!-- HERO -->  <section class="hero" id="hero">
     <h1>🎂 Happy Birthday My Sukanya 🥳🎂</h1>
     <p>You make my world brighter everyday 🌸</p>
+    <p id="birthdayCountdown">
+  🎉 Birthday Countdown Loading...
+</p>
     <button class="btn" onclick="scrollToSection('letter')">Start the Surprise 🎁</button>
   </section>  <!-- LETTER -->  <section id="letter">
     <h2>💌 A Letter For You</h2>
@@ -168,11 +171,15 @@
   </section>  <footer>
     Made with ❤️ just for you
   </footer>  <script>
-  function scrollToSection(id) {
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-  }
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
 
-// ---------- FIREWORKS (JS ONLY) ----------
+function showLove() {
+  document.getElementById('surpriseText').style.display = 'block';
+}
+
+// ---------- FIREWORKS ----------
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
 
@@ -233,30 +240,53 @@ function startFireworks() {
   }, 600);
 }
 
+// ---------- BIRTHDAY COUNTDOWN ----------
+function startBirthdayCountdown() {
+  const el = document.getElementById("birthdayCountdown");
+  const birthday = new Date("December 21, 2025 00:00:00").getTime();
+
+  setInterval(() => {
+    const now = new Date().getTime();
+    const diff = birthday - now;
+
+    if (diff <= 0) {
+      el.innerHTML = "🎉 HAPPY BIRTHDAY SUKANYA ❤️🎉";
+      startFireworks();
+      return;
+    }
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    el.innerHTML = `⏳ ${d} days ${h} hrs ${m} min ${s} sec 💖`;
+  }, 1000);
+}
+
+// ---------- FADE-IN ----------
+window.onload = function () {
+  const hero = document.getElementById("hero");
+  hero.style.opacity = 0;
+
+  let opacity = 0;
+  const fade = setInterval(() => {
+    opacity += 0.02;
+    hero.style.opacity = opacity;
+    if (opacity >= 1) {
+      clearInterval(fade);
+      startFireworks();
+    }
+  }, 20);
+
+  startBirthdayCountdown();
+};
+
 window.addEventListener("resize", () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 });
-
-  function showLove() {
-    document.getElementById('surpriseText').style.display = 'block';
-  }
-
-  // JS-only smooth fade-in for HERO section
-  window.onload = function () {
-    const hero = document.getElementById("hero");
-    hero.style.opacity = 0;
-
-    let opacity = 0;
-    const fade = setInterval(() => {
-      opacity += 0.02;
-      hero.style.opacity = opacity;
-      if (opacity >= 1) {
-  clearInterval(fade);
-  startFireworks(); // 🎆 firecrackers start after fade
-}
-    }, 20);
-  };
 </script></body>
 
 </html>
+

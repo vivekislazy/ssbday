@@ -92,7 +92,7 @@
       opacity: 0.8;
     }
   </style></head>
-<body>  <!-- HERO -->  <section class="hero">
+<body>  <!-- HERO -->  <section class="hero" id="hero">
     <h1>🎂 Happy Birthday My Sukanya 🥳🎂</h1>
     <p>You make my world brighter everyday 🌸</p>
     <button class="btn" onclick="scrollToSection('letter')">Start the Surprise 🎁</button>
@@ -166,14 +166,28 @@
   </section>  <footer>
     Made with ❤️ just for you
   </footer>  <script>
-    function scrollToSection(id) {
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
 
-    function showLove() {
-      document.getElementById('surpriseText').style.display = 'block';
-    }
-  </script></body>
+  function showLove() {
+    document.getElementById('surpriseText').style.display = 'block';
+  }
+
+  // JS-only smooth fade-in for HERO section
+  window.onload = function () {
+    const hero = document.getElementById("hero");
+    hero.style.opacity = 0;
+
+    let opacity = 0;
+    const fade = setInterval(() => {
+      opacity += 0.02;
+      hero.style.opacity = opacity;
+      if (opacity >= 1) clearInterval(fade);
+    }, 20);
+  };
+</script></body>
 
 </html>
+
 
